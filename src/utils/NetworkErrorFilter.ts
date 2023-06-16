@@ -1,15 +1,8 @@
 export const DEFAULT_ERROR = 'Something went wrong. Try again later';
 
-interface ErrorResponse {
-  message?: string;
-  response?: {
-    data?: {
-      message?: string;
-    };
-  };
-}
-
-export function filterNetworkError(err: ErrorResponse) {
+export function filterNetworkError(err: any) {
+  // Accessing general axios response object.
+  // Change keys if using custom response payload
   if (err.response && err.response.data) {
     return err.response.data.message || DEFAULT_ERROR;
   }
