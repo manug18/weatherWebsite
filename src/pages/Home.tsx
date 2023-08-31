@@ -4,8 +4,8 @@ import { CustomButton } from '../components/Atomic/CustomButton';
 import { colors } from '../styles/Colors';
 import axios from 'axios';
 import { WeatherApiResponse } from '../services/models/TestModel.data';
-import { useQuery } from '@tanstack/react-query';
 import LocationDetails from '../components/LocationDetails';
+import Weather from '../components/Weather';
 
 export function Home() {
   const [description, setDescription] = useState('');
@@ -18,19 +18,17 @@ export function Home() {
   const handleSave = () => {
     const apiUrl = `http://api.weatherstack.com/current?access_key=fb6607371c7b2f1a71bcd9f33b4454a2&query=${description}`;
 
-    // Fetch weather data
     axios
       .get(apiUrl)
       .then((response) => {
         setWeatherData(response.data);
-        console.log(response.data);
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
       });
   };
   return (
-    <Stack width={'100%'} height={'100%'}>
+    <Stack width={'100%'} height={'100%'} bgcolor={colors.black.black_800}>
       <Stack direction="row" width={'100%'}>
         <Stack>
           <Typography color={colors.black.black_600}>
@@ -44,7 +42,7 @@ export function Home() {
           onChange={handleDescChange}
           // variant="outlined"
           size="small"
-          sx={{ mt: 2, ml: 2, mr: 2 }}
+          sx={{ mt: 2, ml: 2, mr: 2, color: colors.grey.grey_300 }}
         />
         <CustomButton
           // variant="contained"
@@ -55,13 +53,9 @@ export function Home() {
           Save
         </CustomButton>
       </Stack>
-      <Stack>
+      <Stack direction={'row'}>
         <LocationDetails data={weatherData?.location} />
-        <Typography>HUmidity:{weatherData?.current.humidity}</Typography>
-        <Typography>HUmidity:{weatherData?.current.cloudcover}</Typography>
-        <Typography>HUmidity:{weatherData?.current.is_day}</Typography>
-        <Typography>HUmidity:{weatherData?.current.humidity}</Typography>
-        <Typography>HUmidity:{weatherData?.current.humidity}</Typography>
+        <Weather data={weatherData?.current} />
       </Stack>
     </Stack>
   );
