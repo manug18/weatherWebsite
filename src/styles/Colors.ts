@@ -3,7 +3,8 @@ export const colors = {
     grey_50: '#EDEDED',
     grey_100: '#EFF1F2',
     grey_200: '#F5F5F5',
-    grey_300: '#E4E4E4',
+    grey_300: '#990099',
+
     grey_500: '#DBE4E7',
     grey_600: '#757778',
     grey_700: '#B7B7B7',
@@ -13,7 +14,7 @@ export const colors = {
     black_50: '#f2f2f2',
     black_100: '#e0e0e0',
     black_200: '#bdbdbd',
-    black_600: '#757575',
+    black_600: '#330066',
     black_700: '#616161',
     black_800: '#424242',
     black_900: '#212121',
