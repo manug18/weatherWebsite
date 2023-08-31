@@ -8,7 +8,6 @@ const AppGrid = styled(Box)(() => ({
 }));
 
 /**
- *  Host file for all routes, can contain page headers
  * @returns
  */
 export function Layout() {
