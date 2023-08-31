@@ -14,22 +14,7 @@ const AppGrid = styled(Box)(() => ({
 export function Layout() {
   return (
     <AppGrid>
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          p: { xs: 0, sm: 2 },
-        }}
-      >
-        <Box
-          id="outlet-box"
-          sx={{
-            height: '100%',
-          }}
-        >
-          <Outlet key="LayoutOutlet" />
-        </Box>
-      </Box>
+      <Outlet key="LayoutOutlet" />
     </AppGrid>
   );
 }

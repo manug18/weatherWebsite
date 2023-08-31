@@ -1,74 +1,68 @@
-import { Typography, Stack, Skeleton, Grid, Select, MenuItem } from '@mui/material';
-import { PageWrapper } from '../components/PageWrapper';
+import { Stack, Skeleton, Typography, TextField } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { CustomButton } from '../components/Atomic/CustomButton';
+import { colors } from '../styles/Colors';
+import axios from 'axios';
+import { WeatherApiResponse } from '../services/models/TestModel.data';
 import { useQuery } from '@tanstack/react-query';
-import { getAllPosts, getCommentsOnPost, getIndividualPost } from '../services/TestService';
-import { useState } from 'react';
+import LocationDetails from '../components/LocationDetails';
 
 export function Home() {
-  const [postId, setPostId] = useState<number>(0);
+  const [description, setDescription] = useState('');
 
-  const postsService = useQuery(['posts-all'], getAllPosts);
+  const handleDescChange = (event: { target: { value: React.SetStateAction<string> } }) => {
+    setDescription(event.target.value);
+  };
 
-  const singlePostsService = useQuery(
-    ['post', postId],
-    () => getIndividualPost(postId.toString()),
-    {
-      enabled: postsService.isSuccess && Boolean(postId),
-    }
-  );
+  const [weatherData, setWeatherData] = useState<WeatherApiResponse>();
+  const handleSave = () => {
+    const apiUrl = `http://api.weatherstack.com/current?access_key=fb6607371c7b2f1a71bcd9f33b4454a2&query=${description}`;
 
-  const commentService = useQuery(
-    ['comment', postId],
-    () => getCommentsOnPost({ postId: postId.toString() }),
-    {
-      enabled: singlePostsService.isSuccess,
-    }
-  );
-
+    // Fetch weather data
+    axios
+      .get(apiUrl)
+      .then((response) => {
+        setWeatherData(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  };
   return (
-    <PageWrapper
-      loading={
-        postsService.isLoading ||
-        commentService.isInitialLoading ||
-        singlePostsService.isInitialLoading
-      }
-      skeleton={
-        <Stack direction="row" spacing={2} alignItems="center">
-          <Skeleton height={30} width="80%" />
-          <Skeleton height={50} width="100%" />
+    <Stack width={'100%'} height={'100%'}>
+      <Stack direction="row" width={'100%'}>
+        <Stack>
+          <Typography color={colors.black.black_600}>
+            Enter the City Name you want to proceed
+          </Typography>
         </Stack>
-      }
-    >
-      <Stack spacing={2} width="100%" height="100%">
-        <Typography variant="h3">Home</Typography>
-        <Grid container gap={1}>
-          <Grid item xs={12} lg={3} border="1px solid black">
-            <Stack p={2}>
-              <Typography variant="h4">Choose post</Typography>
-              <Select
-                variant="filled"
-                color="primary"
-                onChange={(e) => setPostId(e.target.value as number)}
-              >
-                {postsService.data?.map((item, idx) => (
-                  <MenuItem key={idx} value={item.id}>
-                    {item.title}
-                  </MenuItem>
-                ))}
-              </Select>
-            </Stack>
-          </Grid>
-          <Grid item xs={12} lg={3} border="1px solid black">
-            <Stack spacing={2} m={2}>
-              <Typography variant="h5">{singlePostsService.data?.title}</Typography>
-              <Typography variant="caption">{singlePostsService.data?.body}</Typography>
-            </Stack>
-          </Grid>
-          <Grid item xs={12} lg={3} border="1px solid black" p={2}>
-            Total comments: {commentService.data?.length || 0}
-          </Grid>
-        </Grid>
+        <TextField
+          id="outlined-basic"
+          label="City Name"
+          value={description}
+          onChange={handleDescChange}
+          // variant="outlined"
+          size="small"
+          sx={{ mt: 2, ml: 2, mr: 2 }}
+        />
+        <CustomButton
+          // variant="contained"
+          onClick={handleSave}
+          // loading={addTaskService.isSuccess}
+          sx={{ backgroundColor: colors.blue.blue_200, width: '6rem' }}
+        >
+          Save
+        </CustomButton>
       </Stack>
-    </PageWrapper>
+      <Stack>
+        <LocationDetails data={weatherData?.location} />
+        <Typography>HUmidity:{weatherData?.current.humidity}</Typography>
+        <Typography>HUmidity:{weatherData?.current.cloudcover}</Typography>
+        <Typography>HUmidity:{weatherData?.current.is_day}</Typography>
+        <Typography>HUmidity:{weatherData?.current.humidity}</Typography>
+        <Typography>HUmidity:{weatherData?.current.humidity}</Typography>
+      </Stack>
+    </Stack>
   );
 }

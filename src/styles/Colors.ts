@@ -9,8 +9,17 @@ export const colors = {
     grey_700: '#B7B7B7',
     grey_800: '#C4C7C8',
   },
+  black: {
+    black_50: '#f2f2f2',
+    black_100: '#e0e0e0',
+    black_200: '#bdbdbd',
+    black_600: '#757575',
+    black_700: '#616161',
+    black_800: '#424242',
+    black_900: '#212121',
+    black_1000: '#000000',
+  },
   white: '#FFFFFF',
-  black: '#000000',
   blue: {
     blue_50: ' #fbfcfd',
     blue_100: '#EDFCFF',

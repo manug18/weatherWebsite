@@ -32,13 +32,13 @@ export const customTheme = createTheme({
     },
     h5: {
       fontWeight: 400,
-      color: colors.black,
+      color: colors.white,
       fontSize: '1.5rem',
       lineHeight: '1',
     },
     h6: {
       fontWeight: 400,
-      color: colors.black,
+      color: colors.white,
       fontSize: '0.875rem',
       lineHeight: '1.5rem',
     },
@@ -62,15 +62,7 @@ export const customTheme = createTheme({
           height: '3rem',
           flexWrap: 'wrap',
         },
-        containedSecondary: {
-          fontSize: '1rem',
-          fontWeight: 500,
-          backgroundColor: colors.grey.grey_100,
-          ':hover': {
-            backgroundColor: colors.grey.grey_300,
-          },
-          color: colors.black,
-        },
+
         contained: {
           fontSize: '1rem',
           fontWeight: 500,
